@@ -1,27 +1,59 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.github.suhorukov</groupId>
-    <artifactId>jmx-json</artifactId>
+    <artifactId>jvm-metrics</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>jmx-json</name>
-    <url>http://maven.apache.org</url>
+    <name>jvm-metrics-json</name>
+    <url>https://github.com/igor-suhorukov/jvm-metrics</url>
+    <description>Expose JVM metrics as JSON objects</description>
+    <developers>
+        <developer>
+            <name>Igor Sukhorukov</name>
+            <url>http://suhorukov.blogspot.ru</url>
+            <email>igor.suhorukov[skip this] at gmail.com</email>
+        </developer>
+    </developers>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <scm>
+        <url>https://github.com/igor-suhorukov/jvm-metrics.git</url>
+        <connection>scm:git:git://github.com/igor-suhorukov/jvm-metrics.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/igor-suhorukov/jvm-metrics.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+    <properties>
+        <jolokia.version>1.3.1</jolokia.version>
+        <sigar-loader.version>1.6.6-rev002</sigar-loader.version>
+        <maven.compiler.source>1.5</maven.compiler.source>
+        <maven.compiler.target>1.5</maven.compiler.target>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.jolokia</groupId>
             <artifactId>jolokia-jsr160</artifactId>
-            <version>1.2.3</version>
+            <version>${jolokia.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jolokia</groupId>
             <artifactId>jolokia-core</artifactId>
-            <version>1.2.3</version>
+            <version>${jolokia.version}</version>
         </dependency>
         <dependency>
             <groupId>io.kamon</groupId>
             <artifactId>sigar-loader</artifactId>
-            <version>1.6.5-rev001</version>
+            <version>${sigar-loader.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -30,17 +62,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.2</version>
-                <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

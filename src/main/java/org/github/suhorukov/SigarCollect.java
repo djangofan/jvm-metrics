@@ -3,12 +3,8 @@ package org.github.suhorukov;
 import kamon.sigar.SigarProvisioner;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
-import org.jolokia.converter.json.JsonConvertOptions;
 import org.jolokia.converter.json.ObjectToJsonConverter;
-import org.jolokia.converter.object.StringToObjectConverter;
-import org.json.simple.JSONAware;
 
-import javax.management.AttributeNotFoundException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +20,7 @@ public class SigarCollect {
             SigarProvisioner.provision();
             sigar = new Sigar();
             pid = sigar.getPid();
-            jsonConverter = new ObjectToJsonConverter(new StringToObjectConverter());
+            jsonConverter = JsonUtils.createObjectToJsonConverter();
         } catch (Exception e) {
             throw new IllegalArgumentException(e);
         }
@@ -86,12 +82,7 @@ public class SigarCollect {
     }
 
     private String toJson(Map<String, Object> sigarInfo) {
-        try {
-            JSONAware json = (JSONAware) jsonConverter.convertToJson(sigarInfo, null, JsonConvertOptions.DEFAULT);
-            return json.toJSONString();
-        } catch (AttributeNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        return JsonUtils.toJson(jsonConverter, sigarInfo);
     }
 
     private Map<String, Object> createSigarInfo() {

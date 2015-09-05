@@ -8,7 +8,6 @@ import org.jolokia.config.ProcessingParameters;
 import org.jolokia.converter.Converters;
 import org.jolokia.converter.json.JsonConvertOptions;
 import org.jolokia.converter.json.ObjectToJsonConverter;
-import org.jolokia.converter.object.StringToObjectConverter;
 import org.jolokia.request.JmxRequest;
 import org.jolokia.request.JmxRequestFactory;
 import org.jolokia.restrictor.AllowAllRestrictor;
@@ -35,7 +34,7 @@ public class JmxCollect {
 
     public JmxCollect(RequestDispatcher requestDispatcher) {
         this.requestDispatcher = requestDispatcher;
-        jsonConverter = new ObjectToJsonConverter(new StringToObjectConverter());
+        jsonConverter = JsonUtils.createObjectToJsonConverter();
     }
 
     public String getJsonJmxInfo(String filter, Date requestDate) throws Exception{

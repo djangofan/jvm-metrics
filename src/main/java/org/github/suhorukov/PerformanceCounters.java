@@ -22,6 +22,7 @@ public class PerformanceCounters {
     public static final String VARIABILITY_FIELD = "variability";
     public static final String UNITS_FIELD = "units";
     public static final String READ_ONLY_FLAG = "r";
+    public static final int INITIAL_VALUE_MAP_CAPACITY = 3;
     private final int pid;
 
     private ObjectToJsonConverter jsonConverter;
@@ -100,11 +101,11 @@ public class PerformanceCounters {
         }
 
         public TransformCountersToMap invoke() {
-            baseCounters = new HashMap<String, Object>();
-            extendedCounters = new HashMap<String, Map<String, Object>>();
+            baseCounters = new HashMap<String, Object>(countersList.size());
+            extendedCounters = new HashMap<String, Map<String, Object>>(countersList.size());
             for(Counter counterObj: countersList) {
                 Counter counter = (Counter) counterObj;
-                HashMap<String,Object> value = new HashMap<String,Object>(3);
+                HashMap<String,Object> value = new HashMap<String,Object>(INITIAL_VALUE_MAP_CAPACITY);
                 value.put(UNITS_FIELD, counter.getUnits().toString());
                 value.put(VARIABILITY_FIELD, counter.getVariability().toString());
                 value.put(VALUE_FIELD, counter.getValue());

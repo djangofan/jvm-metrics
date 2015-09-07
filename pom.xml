@@ -5,7 +5,7 @@
         <version>7</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.github.suhorukov</groupId>
+    <groupId>com.github.suhorukov</groupId>
     <artifactId>jvm-metrics</artifactId>
     <packaging>jar</packaging>
     <version>1.1-SNAPSHOT</version>

@@ -8,7 +8,7 @@
     <groupId>com.github.igor-suhorukov</groupId>
     <artifactId>jvm-metrics</artifactId>
     <packaging>jar</packaging>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <name>jvm-metrics-json</name>
     <url>https://github.com/igor-suhorukov/jvm-metrics</url>
     <description>Expose JVM metrics as JSON objects</description>

@@ -38,16 +38,28 @@ public class JmxCollect {
     }
 
     public String getJsonJmxInfo(String filter, Date requestDate) throws Exception{
-        return toJson(getJmxInfo(filter, requestDate));
+        return getJsonJmxInfo(filter, requestDate, null);
+    }
+
+    public String getJsonJmxInfo(String filter, Date requestDate, Map<String, Object> additionalValues) throws Exception{
+        return toJson(getJmxInfo(filter, requestDate, additionalValues));
     }
 
     @SuppressWarnings("unchecked")
     public Map<String, Object> getJmxInfo(String filter, Date requestDate) throws Exception{
+        return getJmxInfo(filter, requestDate, null);
+    }
+
+    public Map<String, Object> getJmxInfo(String filter, Date requestDate,
+                                          Map<String, Object> additionalValues) throws Exception{
         JmxRequest jmxReadRequest = prepareJolokiaRequest(filter);
         Map<String, Object> jmxInfo = (Map<String, Object>) requestDispatcher.dispatchRequest(jmxReadRequest);
         jmxInfo.put("jmxFilter", filter);
         jmxInfo.put("@version", "1");
         jmxInfo.put("@timestamp", requestDate);
+        if(additionalValues!=null && additionalValues.size()>0) {
+            jmxInfo.putAll(additionalValues);
+        }
         return jmxInfo;
     }
 

@@ -31,65 +31,108 @@ public class SigarCollect {
     }
 
     public String getJsonFullInfo(long pid){
-        return toJson(getFullInfo(pid));
+        return getJsonFullInfo(pid, null);
+    }
+
+    public String getJsonFullInfo(long pid, Map<String, Object> additionalRecords){
+        return toJson(getFullInfo(pid, additionalRecords));
     }
 
     public String getJsonFullInfo(){
-        return toJson(getFullInfo());
+        return getJsonFullInfo(null);
+    }
+
+    public String getJsonFullInfo(Map<String, Object> additionalRecords){
+        return toJson(getFullInfo(additionalRecords));
     }
 
     public String getJsonProcessInfo(){
-        return toJson(getProcessInfo());
+        return getJsonProcessInfo(null);
+    }
+
+    public String getJsonProcessInfo(Map<String, Object> additionalRecords){
+        return toJson(getProcessInfo(additionalRecords));
     }
 
     public String getJsonProcessInfo(long pid){
-        return toJson(getProcessInfo(pid));
+        return getJsonProcessInfo(pid, null);
+    }
+
+    public String getJsonProcessInfo(long pid, Map<String, Object> additionalRecords){
+        return toJson(getProcessInfo(pid, additionalRecords));
     }
 
     public String getJsonSystemInfo(){
-        return toJson(getSystemInfo());
+        return getJsonSystemInfo(null);
+    }
+
+    public String getJsonSystemInfo(Map<String, Object> additionalRecords){
+        return toJson(getSystemInfo(additionalRecords));
     }
 
     public Map<String, Object> getProcessInfo() {
-        return getProcessInfo(pid);
+        return getProcessInfo(pid, null);
+    }
+
+    public Map<String, Object> getProcessInfo(Map<String, Object> additionalRecords) {
+        return getProcessInfo(pid, additionalRecords);
     }
 
     public Map<String, Object> getFullInfo(long pid) {
-        Map<String, Object> sigarInfo = createSigarInfo();
+        return getFullInfo(pid, null);
+    }
+
+    public Map<String, Object> getFullInfo(long pid, Map<String, Object> additionalRecords) {
+        Map<String, Object> sigarInfo = createSigarInfo(additionalRecords);
         fillProcessInfo(pid, sigarInfo);
         fillSystemWideInfo(sigarInfo);
         return sigarInfo;
     }
 
     public Map<String, Object> getFullInfo() {
-        Map<String, Object> sigarInfo = createSigarInfo();
+        return getFullInfo(null);
+    }
+
+    public Map<String, Object> getFullInfo(Map<String, Object> additionalRecords) {
+        Map<String, Object> sigarInfo = createSigarInfo(additionalRecords);
         fillProcessInfo(pid, sigarInfo);
         fillSystemWideInfo(sigarInfo);
         return sigarInfo;
     }
 
     public Map<String, Object> getProcessInfo(long pid) {
-        Map<String, Object> sigarInfo = createSigarInfo();
+        return getProcessInfo(pid, null);
+    }
+
+    public Map<String, Object> getProcessInfo(long pid, Map<String, Object> additionalRecords) {
+        Map<String, Object> sigarInfo = createSigarInfo(additionalRecords);
         fillProcessInfo(pid, sigarInfo);
         return sigarInfo;
     }
 
     public Map<String, Object> getSystemInfo() {
-        Map<String, Object> sigarInfo = createSigarInfo();
+        return getSystemInfo(null);
+    }
+
+    public Map<String, Object> getSystemInfo(Map<String, Object> additionalRecords) {
+        Map<String, Object> sigarInfo = createSigarInfo(additionalRecords);
         fillProcessInfo(pid, sigarInfo);
         fillSystemWideInfo(sigarInfo);
         return sigarInfo;
     }
 
-    private String toJson(Map<String, Object> sigarInfo) {
-        return JsonUtils.toJson(jsonConverter, sigarInfo);
-    }
-
-    private Map<String, Object> createSigarInfo() {
+    private Map<String, Object> createSigarInfo(Map<String, Object> additionalRecords) {
         Map<String, Object> sigarInfo = new HashMap<String, Object>();
         sigarInfo.put("@timestamp", new Date());
         sigarInfo.put("@version", "1");
+        if(additionalRecords!=null && !additionalRecords.isEmpty()) {
+            sigarInfo.putAll(additionalRecords);
+        }
         return sigarInfo;
+    }
+
+    private String toJson(Map<String, Object> sigarInfo) {
+        return JsonUtils.toJson(jsonConverter, sigarInfo);
     }
 
     private void fillProcessInfo(long pid, Map<String, Object> sigarInfo) {

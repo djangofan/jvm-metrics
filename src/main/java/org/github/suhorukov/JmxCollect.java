@@ -41,8 +41,8 @@ public class JmxCollect {
         return getJsonJmxInfo(filter, requestDate, null);
     }
 
-    public String getJsonJmxInfo(String filter, Date requestDate, Map<String, Object> additionalValues) throws Exception{
-        return toJson(getJmxInfo(filter, requestDate, additionalValues));
+    public String getJsonJmxInfo(String filter, Date requestDate, Map<String, Object> additionalRecords) throws Exception{
+        return toJson(getJmxInfo(filter, requestDate, additionalRecords));
     }
 
     @SuppressWarnings("unchecked")
@@ -51,14 +51,14 @@ public class JmxCollect {
     }
 
     public Map<String, Object> getJmxInfo(String filter, Date requestDate,
-                                          Map<String, Object> additionalValues) throws Exception{
+                                          Map<String, Object> additionalRecords) throws Exception{
         JmxRequest jmxReadRequest = prepareJolokiaRequest(filter);
         Map<String, Object> jmxInfo = (Map<String, Object>) requestDispatcher.dispatchRequest(jmxReadRequest);
         jmxInfo.put("jmxFilter", filter);
         jmxInfo.put("@version", "1");
         jmxInfo.put("@timestamp", requestDate);
-        if(additionalValues!=null && additionalValues.size()>0) {
-            jmxInfo.putAll(additionalValues);
+        if(additionalRecords!=null && additionalRecords.size()>0) {
+            jmxInfo.putAll(additionalRecords);
         }
         return jmxInfo;
     }

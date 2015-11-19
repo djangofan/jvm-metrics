@@ -63,16 +63,30 @@ public class PerformanceCounters {
         return getJsonFullInfo(null);
     }
 
-    public String getJsonFullInfo(String filter) throws IOException {
-        return JsonUtils.toJson(jsonConverter, getFullInfo(filter));
+    public String getJsonFullInfo(Map<String, Object> additionalRecords) throws IOException {
+        return getJsonFullInfo(null, additionalRecords);
+    }
+
+    public String getJsonFullInfo(String filter, Map<String, Object> additionalRecords) throws IOException {
+        return JsonUtils.toJson(jsonConverter, appendRecords(additionalRecords, getFullInfo(filter)));
     }
 
     public String getJsonBaseInfo() throws IOException {
         return getJsonBaseInfo(null);
     }
+    public String getJsonBaseInfo(Map<String, Object> additionalRecords) throws IOException {
+        return getJsonBaseInfo(null, additionalRecords);
+    }
 
-    public String getJsonBaseInfo(String filter) throws IOException {
-        return JsonUtils.toJson(jsonConverter, getBaseInfo(filter));
+    public String getJsonBaseInfo(String filter, Map<String, Object> additionalRecords) throws IOException {
+        return JsonUtils.toJson(jsonConverter, appendRecords(additionalRecords, getBaseInfo(filter)));
+    }
+
+    private Map<String, ?> appendRecords(Map<String, Object> additionalRecords, Map fullInfo) {
+        if(additionalRecords!=null && !additionalRecords.isEmpty()){
+            fullInfo.putAll(additionalRecords);
+        }
+        return fullInfo;
     }
 
     private static TransformCountersToMap getPerformanceCounters(int pid, String filter) throws IOException {
